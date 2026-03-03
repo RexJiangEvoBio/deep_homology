@@ -1,7 +1,7 @@
-# Analyze results of simulations
+# Analyze results of simulations where the C-matrix evolved
+# To visualize the results and generate plots, start from line 77
 
 library(resample) # To use colVars
-library(ggplot2)
 
 setwd("/your_directory/")
 
@@ -19,7 +19,7 @@ n_selection_all=c(5,10,15,20,25,30,35,40,45,50)
 n_set=10
 out_list=list() # List of matrices of summary statistics, each corresponding to a repeated set of simulations
 for(r in 1:n_set){
-  dir=paste("./out_plus_",r,sep="")
+  dir=paste("./out_ee_",r,sep="")
   setwd(dir)
   
   out=matrix(0,nrow=length(n_selection_all),ncol=10) # Data matrix of summary statistics
@@ -72,6 +72,9 @@ for(r in 2:n_set){
   d_merged=rbind(d_merged,out_list[[r]])
 }
 write.table(d_merged,file="out_sum_merged_ee.txt",sep="\t")
+
+# Generate plots
+library(ggplot2)
 
 # Re-read merged data file
 d<-read.table("out_sum_merged_ee.txt",sep="\t",header=TRUE)
